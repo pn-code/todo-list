@@ -22,18 +22,44 @@ content.append(inputContainer);
 const todoContainer = document.createElement("ul");
 content.append(todoContainer);
 
-//inputs
+//INPUTS
+const labelTask = document.createElement("label");
+labelTask.innerText = "Task: ";
+inputContainer.append(labelTask);
+
 const inputTask = document.createElement("input");
-inputTask.placeholder = "task";
 inputContainer.append(inputTask);
 
+const labelDueDate = document.createElement("label");
+labelDueDate.innerText = "Due Date: ";
+inputContainer.append(labelDueDate);
+
 const inputDueDate = document.createElement("input");
+inputDueDate.type = "date";
 inputDueDate.placeholder = "due date";
 inputContainer.append(inputDueDate);
 
-const inputPriority = document.createElement("input");
+//select options
+const labelPriority = document.createElement("label");
+labelPriority.innerText = "Priority: ";
+inputContainer.append(labelPriority);
+
+const inputPriority = document.createElement("select");
 inputPriority.placeholder = "priority";
 inputContainer.append(inputPriority);
+
+const inputPriorityHigh = document.createElement("option");
+inputPriorityHigh.innerText = "HIGH";
+inputPriority.append(inputPriorityHigh);
+
+const inputPriorityMedium = document.createElement("option");
+inputPriorityMedium.innerText = "MEDIUM";
+inputPriority.append(inputPriorityMedium);
+
+const inputPriorityLow = document.createElement("option");
+inputPriorityLow.innerText = "LOW";
+inputPriority.append(inputPriorityLow);
+
 
 //add button
 
@@ -44,19 +70,29 @@ inputContainer.append(addBtn);
 //add button functionality:
 
 addBtn.addEventListener("click", () => {
-    const newTask = //creates task via factory function
+
+    //creates task via factory function
+    const newTask = 
         taskFactory(inputTask.value, inputDueDate.value, inputPriority.value);
-    tasksArr.push(newTask.info()); //pushes to tasksArr
-    todoContainer.innerText = ""; //clears content before loading tasksArr
-    tasksArr.map((item) => { // displays tasksArr as list
+
+    //pushes to tasksArr
+    tasksArr.push(newTask.info()); 
+
+    //clears content before loading tasksArr
+    todoContainer.innerText = ""; 
+
+    // displays tasksArr as list
+    tasksArr.map((item) => { 
         const taskItem = document.createElement("li");
         taskItem.innerText = item;
         todoContainer.append(taskItem);
 
+        //remove button
         const removeBtn = document.createElement("button")
         removeBtn.innerText = "X"
         taskItem.append(removeBtn)
 
+        //remove button functionality:
         removeBtn.addEventListener("click", () => {
             //remove from array
             tasksArr.splice(
@@ -66,6 +102,14 @@ addBtn.addEventListener("click", () => {
             taskItem.innerText = "";
 
         })
+
+        //edit button
+        const editBtn = document.createElement("button")
+        editBtn.innerText = "EDIT"
+        taskItem.append(editBtn)
+
+        //edit button functionality
+
     });
 })
 
