@@ -1,6 +1,7 @@
 import taskFactory from "./tasks";
+import "./style.css"
 
-export default function generateDOM() {
+function generateDOM() {
     const tasksArr = [];
 
     // Content Containers
@@ -57,3 +58,5 @@ export default function generateDOM() {
     })
 
 };
+
+generateDOM();
