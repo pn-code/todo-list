@@ -5,8 +5,15 @@ module.exports = {
   mode: "development",
   entry: './src/index.js',
   output: {
-    filename: 'main.js',
+    filename: "[name].js",
     path: path.resolve(__dirname, 'dist'),
+  },
+  optimization: {
+    runtimeChunk: 'single',
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    static: './dist',
   },
   module: {
     rules: [

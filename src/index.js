@@ -1,7 +1,7 @@
 import taskFactory from "./tasks";
 import "./style.css"
 
-function generateDOM() {
+function generateDOM () {
     const tasksArr = [];
 
     // Content Containers
@@ -14,29 +14,31 @@ function generateDOM() {
 
     // add button
     const addBtn = document.getElementById("add-btn");
-
-    // add button functionality:
     addBtn.addEventListener("click", () => {
         // creates task via factory function
-        if ( inputTask.value !== "" ){
+        if ( inputTask.value !== "" ) {
             const newTask = taskFactory( inputTask.value, inputDate.value, inputPriority.value );
             tasksArr.push(newTask.info());  // pushes to tasksArr
             todoContainer.innerText = "";   // clears content before loading tasksArr
             inputTask.value = ""
             inputDate.value = ""
         } else {
-            alert("Please enter a valid task.")
+            alert("Please fill out all inputs.")
         }
+        renderTodos();
+    })
 
-        // displays tasksArr as list
+    function renderTodos (){
         tasksArr.map( item => { 
             const taskItem = document.createElement("li");
             taskItem.innerText = item;
+            taskItem.className = "task-item";
             todoContainer.append(taskItem);
 
             //remove button
-            const removeBtn = document.createElement("button")
-            removeBtn.innerText = "X"
+            const removeBtn = document.createElement("button");
+            removeBtn.innerText = "X";
+            removeBtn.className = "remove-btn";
             taskItem.append(removeBtn)
 
             //remove button functionality:
@@ -48,15 +50,27 @@ function generateDOM() {
             //edit button
             const editBtn = document.createElement("button")
             editBtn.innerText = "EDIT"
+            editBtn.className = "edit-btn";
             taskItem.append(editBtn)
 
             //edit button functionality
             editBtn.addEventListener("click", () => {
-                console.log(tasksArr)
+                // create an input 
+                const editInput = document.createElement("input");
+                editInput.value = tasksArr.slice(tasksArr.indexOf(item), 1);
+                const saveBtn = document.createElement("button");
+                saveBtn.innerText = "SAVE" ;
+                taskItem.replaceWith(editInput, saveBtn)
+
+                saveBtn.addEventListener("click", () => {
+                    tasksArr.splice(tasksArr.indexOf(item), 1, editInput.value)
+                    editInput.remove();
+                    saveBtn.remove();
+                    renderTodos();
+                })
             })
         });
-    })
-
+    }    
 };
 
-generateDOM();
+generateDOM ();
